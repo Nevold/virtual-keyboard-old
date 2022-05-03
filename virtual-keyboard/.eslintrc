@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["airbnb-base", "eslint:recommended", "prettier"],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "no-unreachable-loop": "off",
+    "arrow-body-style": ["off", "always"],
+    "prefer-const": "off",
+    "no-restricted-syntax": "off",
+    "guard-for-in": "off",
+    "vars-on-top": "off",
+    "prefer-arrow-callback": "off",
+    "no-unused-vars": "off",
+    "camelcase": "off",
+    "no-shadow": "off",
+    "func-names": "off",
+    // -------------------------------
+    "no-plusplus": "off",
+    "no-console": "warn",
+    "max-len": ["warn", { "code": 160 }],
+    // "prettier/prettier": [
+    //   "warn",
+    //   {
+    //     "endOfLine": "auto"
+    //   },
+    //   { "printWidth": 160 }
+    // ],
+    "indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "@typescript-eslint/indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ]
+  }
+}
