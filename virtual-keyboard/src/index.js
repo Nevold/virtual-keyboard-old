@@ -299,6 +299,7 @@ const Keyboard = {
           break;
 
         case 'alt':
+          e.preventDefault();
           if (!e.repeat) {
             e.code === 'AltLeft' ? twiceKeys[0].classList.add('keyboard__key--active') : twiceKeys[1].classList.add('keyboard__key--active');
           }
@@ -313,6 +314,7 @@ const Keyboard = {
           break;
 
         case 'tab':
+          e.preventDefault();
           this.properties.value += '    ';
           this._triggerEvent('oninput');
           key.classList.add('keyboard__key--active');
@@ -337,11 +339,87 @@ const Keyboard = {
     });
 
     window.addEventListener('keyup', (e) => {
-      if (e.key.length === 1) {
-        const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
-        if (key) {
+      let key = '';
+      let keySpace = '';
+      let twiceKeys = [];
+      if (e.key.length > 1) {
+        key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
+        twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
+      } else {
+        keySpace = document.querySelector('.keyboard__key--extra-wide');
+      }
+
+      switch (e.key.toLocaleLowerCase()) {
+        case 'backspace':
           key.classList.remove('keyboard__key--active');
-        }
+          break;
+
+        // case 'capslock':
+        //   this._toggleCapsLock();
+        //   key.classList.toggle('keyboard__key--active', this.properties.capsLock);
+        //   break;
+
+        case 'enter':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case ' ':
+          keySpace.classList.remove('keyboard__key--active');
+          break;
+
+        case 'arrowup':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case 'arrowleft':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case 'arrowdown':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case 'arrowright':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case 'shift':
+          if (!e.repeat) {
+            e.code === 'ShiftLeft' ? twiceKeys[0].classList.remove('keyboard__key--active') : twiceKeys[1].classList.remove('keyboard__key--active');
+            this.toggleCapsLockShift();
+          }
+          break;
+
+        case 'control':
+          e.code === 'ControlLeft' ? twiceKeys[0].classList.remove('keyboard__key--active') : twiceKeys[1].classList.remove('keyboard__key--active');
+          break;
+
+        case 'alt':
+          if (!e.repeat) {
+            e.code === 'AltLeft' ? twiceKeys[0].classList.remove('keyboard__key--active') : twiceKeys[1].classList.remove('keyboard__key--active');
+          }
+          break;
+
+        case 'meta':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case 'delete':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        case 'tab':
+          key.classList.remove('keyboard__key--active');
+          break;
+
+        default:
+          if (e.key.length === 1) {
+            const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+            if (key) {
+              key.classList.remove('keyboard__key--active');
+            }
+          }
+          break;
       }
       // const key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
       // key.classList.remove('keyboard__key--active');
