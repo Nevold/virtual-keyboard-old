@@ -229,14 +229,109 @@ const Keyboard = {
     });
 
     window.addEventListener('keydown', (e) => {
-      if (e.key.length === 1) {
-        const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
-        if (key) {
-          this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
-          key.classList.add('keyboard__key--active');
+      let key = '';
+      let keySpace = '';
+
+      e.key.length > 1
+        ? (key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`))
+        : (keySpace = document.querySelector('.keyboard__key--extra-wide'));
+
+      switch (e.key.toLocaleLowerCase()) {
+        case 'backspace':
+          this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
           this._triggerEvent('oninput');
-        }
+          key.classList.add('keyboard__key--active');
+          break;
+
+        case 'capslock':
+          this._toggleCapsLock();
+          key.classList.toggle('keyboard__key--active', this.properties.capsLock);
+          break;
+
+        case 'enter':
+          this.properties.value += '\n';
+          this._triggerEvent('oninput');
+          key.classList.add('keyboard__key--active');
+          break;
+
+        case ' ':
+          this.properties.value += ' ';
+          this._triggerEvent('oninput');
+          keySpace.classList.add('keyboard__key--active');
+          break;
+
+        case 'arrowup':
+          this.properties.value += '▲';
+          this._triggerEvent('oninput');
+          key.classList.add('keyboard__key--active');
+          break;
+
+        case 'arrowleft':
+          this.properties.value += '◄';
+          this._triggerEvent('oninput');
+          key.classList.add('keyboard__key--active');
+          break;
+
+        case 'arrowdown':
+          this.properties.value += '▼';
+          this._triggerEvent('oninput');
+          key.classList.add('keyboard__key--active');
+          break;
+
+        case 'arrowright':
+          this.properties.value += '►';
+          this._triggerEvent('oninput');
+          key.classList.add('keyboard__key--active');
+          break;
+
+        case 'shift':
+          if (!e.repeat) {
+            this.toggleCapsLockShift();
+          }
+          break;
+
+        // case 'control':
+        //   keyElement.classList.add('keyboard__key--bold', 'func-keys');
+        //   keyElement.innerHTML = 'Ctrl';
+        //   break;
+
+        // case 'alt':
+        //   keyElement.classList.add('keyboard__key--bold', 'func-keys');
+        //   keyElement.innerHTML = 'Alt';
+        //   break;
+
+        // case 'meta':
+        //   keyElement.classList.add('keyboard__key--bold', 'func-keys');
+        //   keyElement.innerHTML = 'Win';
+        //   break;
+
+        // case 'delete':
+        //   keyElement.classList.add('keyboard__key--midlle-wide', 'func-keys');
+        //   keyElement.innerHTML = 'Del';
+        //   break;
+
+        // case 'tab':
+        //   keyElement.classList.add('keyboard__key--midlle-wide', 'func-keys');
+        //   keyElement.innerHTML = 'Tab';
+
+        //   keyElement.addEventListener('click', () => {
+        //     this.properties.value += '    ';
+        //     this._triggerEvent('oninput');
+        //   });
+        //   break;
+
+        default:
+          if (e.key.length === 1) {
+            const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+            if (key) {
+              this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
+              key.classList.add('keyboard__key--active');
+              this._triggerEvent('oninput');
+            }
+          }
+          break;
       }
+
       // const key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
       // this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
       // key.classList.add('keyboard__key--active');
