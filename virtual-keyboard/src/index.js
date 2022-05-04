@@ -231,10 +231,13 @@ const Keyboard = {
     window.addEventListener('keydown', (e) => {
       let key = '';
       let keySpace = '';
-
-      e.key.length > 1
-        ? (key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`))
-        : (keySpace = document.querySelector('.keyboard__key--extra-wide'));
+      let twiceKeys = [];
+      if (e.key.length > 1) {
+        key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
+        twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
+      } else {
+        keySpace = document.querySelector('.keyboard__key--extra-wide');
+      }
 
       switch (e.key.toLocaleLowerCase()) {
         case 'backspace':
@@ -286,39 +289,34 @@ const Keyboard = {
 
         case 'shift':
           if (!e.repeat) {
+            e.code === 'ShiftLeft' ? twiceKeys[0].classList.add('keyboard__key--active') : twiceKeys[1].classList.add('keyboard__key--active');
             this.toggleCapsLockShift();
           }
           break;
 
-        // case 'control':
-        //   keyElement.classList.add('keyboard__key--bold', 'func-keys');
-        //   keyElement.innerHTML = 'Ctrl';
-        //   break;
+        case 'control':
+          e.code === 'ControlLeft' ? twiceKeys[0].classList.add('keyboard__key--active') : twiceKeys[1].classList.add('keyboard__key--active');
+          break;
 
-        // case 'alt':
-        //   keyElement.classList.add('keyboard__key--bold', 'func-keys');
-        //   keyElement.innerHTML = 'Alt';
-        //   break;
+        case 'alt':
+          if (!e.repeat) {
+            e.code === 'AltLeft' ? twiceKeys[0].classList.add('keyboard__key--active') : twiceKeys[1].classList.add('keyboard__key--active');
+          }
+          break;
 
-        // case 'meta':
-        //   keyElement.classList.add('keyboard__key--bold', 'func-keys');
-        //   keyElement.innerHTML = 'Win';
-        //   break;
+        case 'meta':
+          key.classList.add('keyboard__key--active');
+          break;
 
-        // case 'delete':
-        //   keyElement.classList.add('keyboard__key--midlle-wide', 'func-keys');
-        //   keyElement.innerHTML = 'Del';
-        //   break;
+        case 'delete':
+          key.classList.add('keyboard__key--active');
+          break;
 
-        // case 'tab':
-        //   keyElement.classList.add('keyboard__key--midlle-wide', 'func-keys');
-        //   keyElement.innerHTML = 'Tab';
-
-        //   keyElement.addEventListener('click', () => {
-        //     this.properties.value += '    ';
-        //     this._triggerEvent('oninput');
-        //   });
-        //   break;
+        case 'tab':
+          this.properties.value += '    ';
+          this._triggerEvent('oninput');
+          key.classList.add('keyboard__key--active');
+          break;
 
         default:
           if (e.key.length === 1) {
