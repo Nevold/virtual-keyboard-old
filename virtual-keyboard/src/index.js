@@ -1,5 +1,6 @@
 import './style.scss';
-import { keyLayout, keyLayoutShiftUp, keyLayoutShiftDown } from './shared/english-layout';
+import { keyLayoutEn, keyLayoutShiftUp, keyLayoutShiftDown } from './shared/english-layout';
+import { keyLayoutRu } from './shared/russian-layout';
 
 const Keyboard = {
   elements: {
@@ -16,6 +17,7 @@ const Keyboard = {
   properties: {
     value: '',
     capsLock: false,
+    lang: false,
   },
 
   init() {
@@ -50,18 +52,29 @@ const Keyboard = {
 
   _createKeys() {
     const fragment = document.createDocumentFragment();
+    let keyLayout = keyLayoutEn;
 
     // Creates HTML for an icon
     // const createIconHTML = (icon_name) => {
     //   return `<i class="material-icons">${icon_name}</i>`;
     // };
 
+    // keyLayout = keyLayoutRu;
+
     keyLayout.forEach((key) => {
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', 'delete', 'enter', '?'].indexOf(key) !== -1;
 
       // Add attributes/classes
-      key.length > 1 ? (keyElement.dataset.name = key.toLocaleLowerCase()) : null;
+      if (key.length > 1) {
+        keyElement.dataset.name = key.toLocaleLowerCase();
+      }
+      if ((key.charCodeAt(0) >= 65 && key.charCodeAt(0) <= 90) || (key.charCodeAt(0) >= 95 && key.charCodeAt(0) <= 122)) {
+        keyElement.dataset.letter = key.toLocaleLowerCase();
+      }
+      // if (key.length === 1) {
+      //   keyElement.classList.add('sign');
+      // }
       keyElement.setAttribute('type', 'button');
       keyElement.classList.add('keyboard__key');
 
@@ -215,7 +228,8 @@ const Keyboard = {
           // });
 
           keyElement.addEventListener('click', () => {
-            this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+            // this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+            this.properties.value += keyElement.textContent;
             this._triggerEvent('oninput');
           });
           break;
@@ -300,9 +314,7 @@ const Keyboard = {
 
         case 'alt':
           e.preventDefault();
-          if (!e.repeat) {
-            e.code === 'AltLeft' ? twiceKeys[0].classList.add('keyboard__key--active') : twiceKeys[1].classList.add('keyboard__key--active');
-          }
+          e.code === 'AltLeft' ? twiceKeys[0].classList.add('keyboard__key--active') : twiceKeys[1].classList.add('keyboard__key--active');
           break;
 
         case 'meta':
@@ -322,9 +334,12 @@ const Keyboard = {
 
         default:
           if (e.key.length === 1) {
-            const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+            // const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+            const key = document.querySelector(`.keyboard__key[data-letter=${String(e.key).toLowerCase()}]`);
+            console.log(key);
             if (key) {
-              this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
+              // this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
+              this.properties.value += key.textContent;
               key.classList.add('keyboard__key--active');
               this._triggerEvent('oninput');
             }
@@ -353,11 +368,6 @@ const Keyboard = {
         case 'backspace':
           key.classList.remove('keyboard__key--active');
           break;
-
-        // case 'capslock':
-        //   this._toggleCapsLock();
-        //   key.classList.toggle('keyboard__key--active', this.properties.capsLock);
-        //   break;
 
         case 'enter':
           key.classList.remove('keyboard__key--active');
@@ -421,8 +431,12 @@ const Keyboard = {
           }
           break;
       }
-      // const key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
-      // key.classList.remove('keyboard__key--active');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.altKey) {
+        this.toggleLanguageLayout();
+      }
     });
 
     return fragment;
@@ -437,7 +451,7 @@ const Keyboard = {
   _toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
     // console.log([...this.elements.keys].filter((elem) => !elem.classList.contains('func-keys')));
-    let count = 0;
+    // let count = 0;
     const elementWithoutFunc = [...this.elements.keys].filter((elem) => !elem.classList.contains('func-keys'));
     for (const key of elementWithoutFunc) {
       if (key.childElementCount === 0) {
@@ -453,6 +467,20 @@ const Keyboard = {
       if (key.childElementCount === 0) {
         key.textContent = this.properties.capsLock ? keyLayoutShiftUp[index] : keyLayoutShiftDown[index];
         key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+      }
+    });
+  },
+
+  toggleLanguageLayout() {
+    this.properties.lang = !this.properties.lang;
+    const elementWithoutFunc = [...this.elements.keys].filter((elem) => !elem.classList.contains('func-keys'));
+    elementWithoutFunc.forEach((key, index) => {
+      if (key.childElementCount === 0) {
+        if (this.properties.capsLock) {
+          key.textContent = this.properties.lang ? keyLayoutRu[index].toLocaleUpperCase() : keyLayoutShiftDown[index].toLocaleUpperCase();
+        } else {
+          key.textContent = this.properties.lang ? keyLayoutRu[index] : keyLayoutShiftDown[index];
+        }
       }
     });
   },
@@ -474,4 +502,9 @@ const Keyboard = {
 
 window.addEventListener('DOMContentLoaded', function () {
   Keyboard.init();
+});
+
+window.addEventListener('keydown', function (e) {
+  console.log(e.code);
+  console.log(e.key);
 });

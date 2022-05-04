@@ -1,4 +1,4 @@
-export const keyLayout = [
+export const keyLayoutEn = [
   '`',
   '1',
   '2',
@@ -128,7 +128,7 @@ export const keyLayout = [
 //   'arrBottom',
 //   'arrRight',
 //   'ctrl',
-// ];
+// ;
 
 export const keyLayoutShiftUp = [
   '~',
@@ -166,7 +166,7 @@ export const keyLayoutShiftUp = [
   'k',
   'l',
   ':',
-  "'",
+  '"',
   'z',
   'x',
   'c',
