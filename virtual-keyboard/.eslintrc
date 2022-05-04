@@ -19,6 +19,7 @@
     "no-shadow": "off",
     "func-names": "off",
     // -------------------------------
+    "no-unused-expressions": "off",
     "no-plusplus": "off",
     "no-console": "warn",
     "max-len": ["warn", { "code": 160 }],

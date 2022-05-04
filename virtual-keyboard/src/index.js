@@ -61,7 +61,7 @@ const Keyboard = {
       const insertLineBreak = ['backspace', 'delete', 'enter', '?'].indexOf(key) !== -1;
 
       // Add attributes/classes
-      keyElement.dataset.name = String(key).toLocaleLowerCase();
+      key.length > 1 ? (keyElement.dataset.name = key.toLocaleLowerCase()) : null;
       keyElement.setAttribute('type', 'button');
       keyElement.classList.add('keyboard__key');
 
@@ -125,7 +125,7 @@ const Keyboard = {
 
           break;
 
-        case 'arrTop':
+        case 'arrowup':
           keyElement.classList.add('func-keys');
           keyElement.innerHTML = '&#9650;';
           keyElement.addEventListener('click', () => {
@@ -134,7 +134,7 @@ const Keyboard = {
           });
           break;
 
-        case 'arrLeft':
+        case 'arrowleft':
           keyElement.classList.add('func-keys');
           keyElement.innerHTML = '&#9668;';
           keyElement.addEventListener('click', () => {
@@ -143,7 +143,7 @@ const Keyboard = {
           });
           break;
 
-        case 'arrBottom':
+        case 'arrowdown':
           keyElement.classList.add('func-keys');
           keyElement.innerHTML = '&#9660;';
           keyElement.addEventListener('click', () => {
@@ -152,7 +152,7 @@ const Keyboard = {
           });
           break;
 
-        case 'arrRight':
+        case 'arrowright':
           keyElement.classList.add('func-keys');
           keyElement.innerHTML = '&#9658;';
           keyElement.addEventListener('click', () => {
@@ -219,7 +219,6 @@ const Keyboard = {
           // });
 
           keyElement.addEventListener('click', () => {
-            console.log(keyElement.dataset.name);
             this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
             this._triggerEvent('oninput');
           });
@@ -305,8 +304,4 @@ const Keyboard = {
 
 window.addEventListener('DOMContentLoaded', function () {
   Keyboard.init();
-  // document.addEventListener('keypress', (e) => {
-  //   console.log(e.code);
-  //   console.log(e.key);
-  // });
 });
