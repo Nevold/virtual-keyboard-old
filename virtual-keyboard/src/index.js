@@ -334,6 +334,8 @@ const Keyboard = {
           break;
 
         default:
+          console.log(e.key);
+          console.log(this.properties.lang);
           // if (e.key.length === 1) {
           // const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
           if ((e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) || (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122)) {
@@ -341,7 +343,9 @@ const Keyboard = {
           } else {
             [defaultKey] = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase());
           }
+          // switch (e.key.toLocaleLowerCase()) {
 
+          // }
           // console.log(e.key.charCodeAt(0));
           // if (key) {
           // this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
