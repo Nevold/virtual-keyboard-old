@@ -537,6 +537,11 @@ const Keyboard = {
 
     document.addEventListener('keydown', (e) => {
       if (e.ctrlKey && e.altKey) {
+        if (this.properties.lang) {
+          localStorage.setItem('lang', 'en');
+        } else {
+          localStorage.setItem('lang', 'ru');
+        }
         this.toggleLanguageLayout();
       }
     });
@@ -608,6 +613,7 @@ const Keyboard = {
 
 window.addEventListener('DOMContentLoaded', function () {
   Keyboard.init();
+  if (localStorage.getItem('lang') === 'ru') Keyboard.toggleLanguageLayout();
 });
 
 // window.addEventListener('keydown', function (e) {
