@@ -1,6 +1,6 @@
 import './style.scss';
 import { keyLayoutEn, keyLayoutShiftUp, keyLayoutShiftDown } from './shared/english-layout';
-import { keyLayoutRu } from './shared/russian-layout';
+import { keyLayoutRu, keyLayoutRuUp } from './shared/russian-layout';
 
 const Keyboard = {
   elements: {
@@ -567,7 +567,11 @@ const Keyboard = {
     const elementWithoutFunc = [...this.elements.keys].filter((elem) => !elem.classList.contains('func-keys'));
     elementWithoutFunc.forEach((key, index) => {
       if (key.childElementCount === 0) {
-        key.textContent = this.properties.capsLock ? keyLayoutShiftUp[index] : keyLayoutShiftDown[index];
+        if (!this.properties.lang) {
+          key.textContent = this.properties.capsLock ? keyLayoutShiftUp[index] : keyLayoutShiftDown[index];
+        } else {
+          key.textContent = this.properties.capsLock ? keyLayoutRuUp[index] : keyLayoutRu[index];
+        }
         key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
       }
     });
