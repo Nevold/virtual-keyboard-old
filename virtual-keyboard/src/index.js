@@ -334,26 +334,66 @@ const Keyboard = {
           break;
 
         default:
-          console.log(e.key);
-          console.log(this.properties.lang);
-          // if (e.key.length === 1) {
-          // const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+          if (this.properties.lang) {
+            switch (e.code.toLocaleLowerCase()) {
+              case 'bracketleft':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'х'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Х' : 'х';
+                break;
+
+              case 'bracketright':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ъ'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Ъ' : 'ъ';
+                break;
+              case 'semicolon':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ж'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Ж' : 'ж';
+                break;
+              case 'quote':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'э'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Э' : 'э';
+                break;
+              case 'comma':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'б'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Б' : 'б';
+                break;
+              case 'period':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ю'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Ю' : 'ю';
+                break;
+              case 'backquote':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ё'.charCodeAt(0))[0]
+                  .classList.add('keyboard__key--active');
+                this.properties.value += this.properties.capsLock ? 'Ё' : 'ё';
+                break;
+              default:
+                break;
+            }
+          }
           if ((e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) || (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122)) {
-            defaultKey = document.querySelector(`.keyboard__key[data-letter=${String(e.key).toLowerCase()}]`);
+            defaultKey = document.querySelector(`.keyboard__key[data-letter=${[...e.code.toLowerCase()].pop()}]`);
           } else {
             [defaultKey] = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase());
           }
-          // switch (e.key.toLocaleLowerCase()) {
 
-          // }
-          // console.log(e.key.charCodeAt(0));
-          // if (key) {
-          // this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
-          this.properties.value += defaultKey.textContent;
-          defaultKey.classList.add('keyboard__key--active');
+          if (defaultKey) {
+            this.properties.value += defaultKey.textContent;
+            defaultKey.classList.add('keyboard__key--active');
+          }
           this._triggerEvent('oninput');
-          // }
-          // }
           break;
       }
 
@@ -367,6 +407,7 @@ const Keyboard = {
       let key = '';
       let keySpace = '';
       let twiceKeys = [];
+      let defaultKey = '';
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -433,11 +474,62 @@ const Keyboard = {
           break;
 
         default:
-          if (e.key.length === 1) {
-            const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
-            if (key) {
-              key.classList.remove('keyboard__key--active');
+          // if (e.key.length === 1) {
+          //   const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+          //   if (key) {
+          //     key.classList.remove('keyboard__key--active');
+          //   }
+          // }
+          if (this.properties.lang) {
+            switch (e.code.toLocaleLowerCase()) {
+              case 'bracketleft':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'х'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+
+              case 'bracketright':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ъ'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+              case 'semicolon':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ж'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+              case 'quote':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'э'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+              case 'comma':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'б'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+              case 'period':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ю'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+              case 'backquote':
+                [...document.querySelectorAll('.keyboard__key')]
+                  .filter((elem) => elem.textContent.toLowerCase().charCodeAt(0) === 'ё'.charCodeAt(0))[0]
+                  .classList.remove('keyboard__key--active');
+                break;
+              default:
+                break;
             }
+          }
+          if ((e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) || (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122)) {
+            defaultKey = document.querySelector(`.keyboard__key[data-letter=${[...e.code.toLowerCase()].pop()}]`);
+          } else {
+            [defaultKey] = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase());
+          }
+
+          if (defaultKey) {
+            defaultKey.classList.remove('keyboard__key--active');
           }
           break;
       }

@@ -139,7 +139,7 @@ export const keyLayoutShiftUp = [
   '%',
   '^',
   '&',
-  '&',
+  '*',
   '(',
   ')',
   '_',
