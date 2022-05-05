@@ -69,7 +69,7 @@ const Keyboard = {
       if (key.length > 1) {
         keyElement.dataset.name = key.toLocaleLowerCase();
       }
-      if ((key.charCodeAt(0) >= 65 && key.charCodeAt(0) <= 90) || (key.charCodeAt(0) >= 95 && key.charCodeAt(0) <= 122)) {
+      if ((key.charCodeAt(0) >= 65 && key.charCodeAt(0) <= 90) || (key.charCodeAt(0) >= 97 && key.charCodeAt(0) <= 122)) {
         keyElement.dataset.letter = key.toLocaleLowerCase();
       }
       // if (key.length === 1) {
@@ -246,6 +246,7 @@ const Keyboard = {
       let key = '';
       let keySpace = '';
       let twiceKeys = [];
+      let defaultKey = '';
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -333,17 +334,22 @@ const Keyboard = {
           break;
 
         default:
-          if (e.key.length === 1) {
-            // const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
-            const key = document.querySelector(`.keyboard__key[data-letter=${String(e.key).toLowerCase()}]`);
-            console.log(key);
-            if (key) {
-              // this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
-              this.properties.value += key.textContent;
-              key.classList.add('keyboard__key--active');
-              this._triggerEvent('oninput');
-            }
+          // if (e.key.length === 1) {
+          // const key = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase())[0];
+          if ((e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) || (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122)) {
+            defaultKey = document.querySelector(`.keyboard__key[data-letter=${String(e.key).toLowerCase()}]`);
+          } else {
+            [defaultKey] = [...document.querySelectorAll('.keyboard__key')].filter((elem) => elem.textContent.toLowerCase() === e.key.toLowerCase());
           }
+
+          // console.log(e.key.charCodeAt(0));
+          // if (key) {
+          // this.properties.value += this.properties.capsLock ? e.key.toUpperCase() : e.key.toLowerCase();
+          this.properties.value += defaultKey.textContent;
+          defaultKey.classList.add('keyboard__key--active');
+          this._triggerEvent('oninput');
+          // }
+          // }
           break;
       }
 
@@ -504,7 +510,7 @@ window.addEventListener('DOMContentLoaded', function () {
   Keyboard.init();
 });
 
-window.addEventListener('keydown', function (e) {
-  console.log(e.code);
-  console.log(e.key);
-});
+// window.addEventListener('keydown', function (e) {
+//   console.log(e.code);
+//   console.log(e.key);
+// });
