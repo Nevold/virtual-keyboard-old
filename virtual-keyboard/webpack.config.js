@@ -61,12 +61,12 @@ module.exports = ({ development }) => ({
   plugins: [
     ...esLintPlugin(development),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
-    // new HtmlWebpackPlugin({
-    //   title: 'virtual-keyboard',
-    // }),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      title: 'virtual-keyboard',
     }),
+    // new HtmlWebpackPlugin({
+    //   template: './src/index.html',
+    // }),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
     }),
