@@ -51,6 +51,7 @@ const Keyboard = {
     const keyLayout = keyLayoutEn;
 
     keyLayout.forEach((key) => {
+      let selectionStart;
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', 'delete', 'enter', '?'].indexOf(key) !== -1;
 
@@ -170,6 +171,15 @@ const Keyboard = {
         case 'delete':
           keyElement.classList.add('keyboard__key--midlle-wide', 'func-keys');
           keyElement.innerHTML = 'Del';
+
+          keyElement.addEventListener('click', () => {
+            const textarea = document.querySelector('textarea');
+            if (textarea.selectionStart !== 0) selectionStart = textarea.selectionStart;
+            const delCount = [...this.properties.value];
+            delCount.splice(textarea.selectionStart === 0 ? selectionStart : textarea.selectionStart, 1);
+            this.properties.value = delCount.join('');
+            this.triggerEvent('oninput');
+          });
           break;
 
         case 'tab':
@@ -203,6 +213,7 @@ const Keyboard = {
       let keySpace = '';
       let twiceKeys = [];
       let defaultKey = '';
+      let selectionStart;
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -280,6 +291,16 @@ const Keyboard = {
 
         case 'delete':
           key.classList.add('keyboard__key--active');
+          {
+            // keyElement.addEventListener('click', () => {
+            const textarea = document.querySelector('textarea');
+            if (textarea.selectionStart !== 0) selectionStart = textarea.selectionStart;
+            const delCount = [...this.properties.value];
+            delCount.splice(textarea.selectionStart === 0 ? selectionStart : textarea.selectionStart, 1);
+            this.properties.value = delCount.join('');
+            this.triggerEvent('oninput');
+          }
+          // });
           break;
 
         case 'tab':
