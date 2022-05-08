@@ -34,15 +34,39 @@ const Keyboard = {
     document.body.appendChild(this.elements.main);
 
     // Automatically use keyboard for elements with .use-keyboard-input
-    document.querySelectorAll('.use-keyboard-input').forEach((element) => {
-      // element.addEventListener('keypress', () => {
-      //   this.open(element.value, (currentValue) => {
-      //     element.value = currentValue;
-      //   });
-      // });
-      this.open(element.value, (currentValue) => {
-        element.value = currentValue;
+    // document.querySelectorAll('.use-keyboard-input').forEach((element) => {
+    //   element.addEventListener('focus', () => {
+    //     this.open(element.value, (currentValue) => {
+    //       const key = [...currentValue];
+    //       key.pop();
+    //       element.value = key.join('');
+    //       console.log(element.value);
+    //     });
+    //   });
+    //   this.open(element.value, (currentValue) => {
+    //     element.value = currentValue;
+    //   });
+    // });
+
+    // Focus on and focus off
+    const textarea = document.querySelector('.use-keyboard-input');
+    let doubleSimbol;
+    textarea.addEventListener('focus', () => {
+      this.open(textarea.value, (currentValue) => {
+        doubleSimbol = [...currentValue];
+        doubleSimbol.pop();
+        textarea.value = doubleSimbol.join('');
       });
+    });
+
+    textarea.addEventListener('blur', () => {
+      this.open(textarea.value, (currentValue) => {
+        textarea.value = currentValue;
+      });
+    });
+
+    this.open(textarea.value, (currentValue) => {
+      textarea.value = currentValue;
     });
   },
 
