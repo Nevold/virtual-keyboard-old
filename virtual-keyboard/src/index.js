@@ -226,6 +226,7 @@ const Keyboard = {
       let defaultKey = '';
       let selectionStart;
       const regexp = /[А-Яа-я]/gi;
+      const regexpExceptions = /[ХхЪъЖжЭэБбЮюЁё]/gi;
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -379,10 +380,10 @@ const Keyboard = {
           if (
             (e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) ||
             (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122) ||
-            e.key.search(regexp) >= 0
+            (e.key.search(regexp) >= 0 && e.key.search(regexpExceptions) === -1)
           ) {
             defaultKey = document.querySelector(`.keyboard__key[data-letter=${[...e.code.toLowerCase()].pop()}]`);
-          } else {
+          } else if (e.key.search(regexpExceptions) === -1) {
             [defaultKey] = [...document.querySelectorAll('.keyboard__key')].filter(
               (elem) => elem.textContent.toLowerCase() === e.key.toLowerCase()
             );
@@ -402,6 +403,7 @@ const Keyboard = {
       let twiceKeys = [];
       let defaultKey = '';
       const regexp = /[А-Яа-я]/gi;
+      const regexpExceptions = /[ХхЪъЖжЭэБбЮюЁё]/gi;
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -519,10 +521,10 @@ const Keyboard = {
           if (
             (e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) ||
             (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122) ||
-            e.key.search(regexp) >= 0
+            (e.key.search(regexp) >= 0 && e.key.search(regexpExceptions) === -1)
           ) {
             defaultKey = document.querySelector(`.keyboard__key[data-letter=${[...e.code.toLowerCase()].pop()}]`);
-          } else {
+          } else if (e.key.search(regexpExceptions) === -1) {
             [defaultKey] = [...document.querySelectorAll('.keyboard__key')].filter(
               (elem) => elem.textContent.toLowerCase() === e.key.toLowerCase()
             );

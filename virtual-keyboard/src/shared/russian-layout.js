@@ -44,18 +44,18 @@ export const keyLayoutRu = [
   'ь',
   'б',
   'ю',
-  '/',
+  '.',
 ];
 
 export const keyLayoutRuUp = [
   'ё',
   '!',
-  '@',
-  '#',
-  '$',
+  `"`,
+  '№',
+  ';',
   '%',
-  '^',
-  '&',
+  ':',
+  '?',
   '*',
   '(',
   ')',
@@ -93,5 +93,5 @@ export const keyLayoutRuUp = [
   'ь',
   'б',
   'ю',
-  '/',
+  ',',
 ];
