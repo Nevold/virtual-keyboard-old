@@ -627,9 +627,20 @@ const Keyboard = {
 };
 // start
 window.onload = () => {
+  const header = document.createElement('h1');
+  header.classList.add('header');
+  header.innerHTML = 'RSS Virtual Keyboard';
+  document.body.append(header);
   const app = document.createElement('textarea');
   app.classList.add('use-keyboard-input');
   document.body.append(app);
   Keyboard.init();
+  const footer = document.createElement('div');
+  footer.classList.add('footer');
+  footer.innerHTML = `
+    <p>Created in the <span>Windows</span> operating system</p>
+    <p>Press the <span>Ctrl</span> + <span>Alt</span> to switch the keyboard language layout</p>
+  `;
+  document.body.append(footer);
   if (localStorage.getItem('lang') === 'ru') Keyboard.toggleLanguageLayout();
 };

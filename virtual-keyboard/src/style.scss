@@ -56,14 +56,16 @@
   position: relative;
   top: 1px;
   left: 1px;
-  box-shadow: inset 0px -1px 1px rgba(255, 255, 255, 0.5), 0px 10px 8px rgba(0, 0, 0, 0.3), 0px 1px 4px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px -1px 1px rgba(255, 255, 255, 0.5), 0px 10px 8px rgba(0, 0, 0, 0.3),
+    0px 1px 4px rgba(255, 255, 255, 0.5);
 }
 
 .keyboard__key--active {
   position: relative;
   top: 1px;
   left: 1px;
-  box-shadow: inset 0px -1px 1px rgba(255, 255, 255, 0.5), 0px 10px 8px rgba(0, 0, 0, 0.3), 0px 1px 4px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px -1px 1px rgba(255, 255, 255, 0.5), 0px 10px 8px rgba(0, 0, 0, 0.3),
+    0px 1px 4px rgba(255, 255, 255, 0.5);
 }
 
 .keyboard__key--wide {
@@ -118,4 +120,31 @@
   font-size: 18px;
   line-height: 110%;
   letter-spacing: 0.06em;
+}
+
+.header {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
+  text-align: center;
+  color: #747a7a;
+}
+
+.footer {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  color: #747a7a;
+  span {
+    font-weight: 600;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+  }
 }
