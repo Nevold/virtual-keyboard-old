@@ -10,7 +10,7 @@
     "no-unused-expressions": "off",
     "no-plusplus": "off",
     "no-console": "warn",
-    "max-len": ["warn", { "code": 160 }],
+    "max-len": ["warn", { "code": 120 }],
     "indent": [
       "warn",
       2,
