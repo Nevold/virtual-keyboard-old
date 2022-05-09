@@ -11,7 +11,6 @@ const Keyboard = {
 
   eventHandlers: {
     oninput: null,
-    onclose: null,
   },
 
   properties: {
@@ -32,21 +31,6 @@ const Keyboard = {
 
     this.elements.main.appendChild(this.elements.keysContainer);
     document.body.appendChild(this.elements.main);
-
-    // Automatically use keyboard for elements with .use-keyboard-input
-    // document.querySelectorAll('.use-keyboard-input').forEach((element) => {
-    //   element.addEventListener('focus', () => {
-    //     this.open(element.value, (currentValue) => {
-    //       const key = [...currentValue];
-    //       key.pop();
-    //       element.value = key.join('');
-    //       console.log(element.value);
-    //     });
-    //   });
-    //   this.open(element.value, (currentValue) => {
-    //     element.value = currentValue;
-    //   });
-    // });
 
     // Focus on and focus off
     const textarea = document.querySelector('.use-keyboard-input');
@@ -325,7 +309,6 @@ const Keyboard = {
         case 'delete':
           key.classList.add('keyboard__key--active');
           {
-            // keyElement.addEventListener('click', () => {
             const textarea = document.querySelector('textarea');
             if (textarea.selectionStart !== 0) selectionStart = textarea.selectionStart;
             const delCount = [...this.properties.value];
@@ -333,7 +316,6 @@ const Keyboard = {
             this.properties.value = delCount.join('');
             this.triggerEvent('oninput');
           }
-          // });
           break;
 
         case 'tab':
@@ -611,20 +593,12 @@ const Keyboard = {
     });
   },
 
-  open(initialValue, oninput, onclose) {
+  open(initialValue, oninput) {
     this.properties.value = initialValue || '';
     this.eventHandlers.oninput = oninput;
-    this.eventHandlers.onclose = onclose;
-    this.elements.main.classList.remove('keyboard--hidden');
-  },
-
-  close() {
-    this.properties.value = '';
-    this.eventHandlers.oninput = oninput;
-    this.eventHandlers.onclose = onclose;
-    this.elements.main.classList.add('keyboard--hidden');
   },
 };
+
 // start
 window.onload = () => {
   const header = document.createElement('h1');
