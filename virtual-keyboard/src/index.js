@@ -225,6 +225,7 @@ const Keyboard = {
       let twiceKeys = [];
       let defaultKey = '';
       let selectionStart;
+      const regexp = /[А-Яа-я]/gi;
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -377,7 +378,8 @@ const Keyboard = {
           }
           if (
             (e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) ||
-            (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122)
+            (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122) ||
+            e.key.search(regexp) >= 0
           ) {
             defaultKey = document.querySelector(`.keyboard__key[data-letter=${[...e.code.toLowerCase()].pop()}]`);
           } else {
@@ -385,7 +387,6 @@ const Keyboard = {
               (elem) => elem.textContent.toLowerCase() === e.key.toLowerCase()
             );
           }
-
           if (defaultKey) {
             this.properties.value += defaultKey.textContent;
             defaultKey.classList.add('keyboard__key--active');
@@ -400,6 +401,7 @@ const Keyboard = {
       let keySpace = '';
       let twiceKeys = [];
       let defaultKey = '';
+      const regexp = /[А-Яа-я]/gi;
       if (e.key.length > 1) {
         key = document.querySelector(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`);
         twiceKeys = [...document.querySelectorAll(`.keyboard__key[data-name=${String(e.key).toLowerCase()}]`)];
@@ -516,7 +518,8 @@ const Keyboard = {
           }
           if (
             (e.key.charCodeAt(0) >= 65 && e.key.charCodeAt(0) <= 90) ||
-            (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122)
+            (e.key.charCodeAt(0) >= 97 && e.key.charCodeAt(0) <= 122) ||
+            e.key.search(regexp) >= 0
           ) {
             defaultKey = document.querySelector(`.keyboard__key[data-letter=${[...e.code.toLowerCase()].pop()}]`);
           } else {
